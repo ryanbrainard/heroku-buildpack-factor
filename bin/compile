@@ -14,17 +14,17 @@ mv * $CACHE_DIR/tmp_work
 
 # check if we already downloaded factor; otherwise download it
 if [ -d $CACHE_DIR/factor ]; then
-  echo -n "Copying Factor... "
+  echo -n "-----> Copying Factor... "
   cp -r $CACHE_DIR/factor $BUILD_DIR
   echo "done"
 else
-  echo -n "Downloading Factor... "
+  echo -n "-----> Downloading Factor... "
   curl --silent --fail http://rbrainard-public.s3.amazonaws.com/heroku-buildpack-factor/factor.tgz | tar xz
   cp -r factor $CACHE_DIR
   echo "done"
 fi
 
-echo -n "Copying pushed code to 'work' dir... "
+echo -n "-----> Copying pushed code to 'work' dir... "
 rm -rf factor/work
 mv $CACHE_DIR/tmp_work factor/work
 echo "done"
