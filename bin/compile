@@ -12,6 +12,11 @@ shopt -s dotglob
 mkdir -p $CACHE_DIR/tmp_work
 mv * $CACHE_DIR/tmp_work
 
+# keep Procfile
+if [ -f $CACHE_DIR/tmp_work/Procfile ]; then
+  mv $CACHE_DIR/tmp_work/Procfile .
+fi
+
 echo -n "-----> Downloading Factor... "
 curl --silent --fail http://rbrainard-public.s3.amazonaws.com/heroku-buildpack-factor/factor.tgz | tar xz
 echo "done"
