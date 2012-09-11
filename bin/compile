@@ -25,3 +25,13 @@ echo -n "-----> Copying app into work dir... "
 rm -rf work
 mv $CACHE_DIR/tmp_work work
 echo "done"
+
+echo -n "-----> Preparing Furnace imaging... "
+../factor/factor << EOF
+USE: furnace
+"tmp.image" save-image
+USE: system
+0 exit
+EOF
+mv tmp.image factor.image
+echo "done"
