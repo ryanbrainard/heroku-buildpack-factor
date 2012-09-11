@@ -27,7 +27,7 @@ mv $CACHE_DIR/tmp_work work
 echo "done"
 
 echo -n "-----> Preparing Furnace imaging... "
-../factor/factor << EOF
+factor << EOF
 USE: furnace
 "tmp.image" save-image
 USE: system
