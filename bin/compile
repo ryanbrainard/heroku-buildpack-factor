@@ -5,14 +5,21 @@ CACHE_DIR=$2
 
 cd $BUILD_DIR
 
+# include .files when moving things around
+shopt -s dotglob
+
+# move everything pushed into tmp dir so we can prep Factor
+mkdir -p $CACHE_DIR/tmp_work
+mv * $CACHE_DIR/tmp_work
+
+# check if we already downloaded factor; otherwise download it
 if [ -d $CACHE_DIR/factor ]; then
   cp -r $CACHE_DIR/factor $BUILD_DIR
 else
- git clone git://factorcode.org/git/factor.git
+  curl --silent --fail http://rbrainard-public.s3.amazonaws.com/heroku-buildpack-factor/factor.tgz | tar xz
+  cp -r factor $CACHE_DIR
 fi
 
-cd factor
-./build-support/factor.sh update
-
-cd $BUILD_DIR
-cp -r factor $CACHE_DIR
+# move the pushed code under work dir
+rm -rf factor/work
+mv $CACHE_DIR/tmp_work factor/work
