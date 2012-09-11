@@ -21,7 +21,7 @@ echo -n "-----> Downloading Factor... "
 curl --silent --fail http://rbrainard-public.s3.amazonaws.com/heroku-buildpack-factor/factor.tgz | tar xz
 echo "done"
 
-echo -n "-----> Copying pushed code to 'work' dir... "
-rm -rf factor/work
-mv $CACHE_DIR/tmp_work factor/work
+echo -n "-----> Copying app into work dir... "
+rm -rf work
+mv $CACHE_DIR/tmp_work work
 echo "done"
