@@ -1,3 +1,18 @@
 #!/usr/bin/env bash
 
+BUILD_DIR=$1
+CACHE_DIR=$2
+
+cd $BUILD_DIR
+
+if [ -d $CACHE_DIR/factor ]; then
+  cp -r $CACHE_DIR/factor $BUILD_DIR
+else
+ git clone git://factorcode.org/git/factor.git
+fi
+
+cd factor
 ./build-support/factor.sh update
+
+cd $BUILD_DIR
+cp -r factor $CACHE_DIR
