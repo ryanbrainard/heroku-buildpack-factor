@@ -12,10 +12,12 @@ shopt -s dotglob
 mkdir -p $CACHE_DIR/tmp_work
 mv * $CACHE_DIR/tmp_work
 
-# keep Procfile
-if [ -f $CACHE_DIR/tmp_work/Procfile ]; then
-  mv $CACHE_DIR/tmp_work/Procfile .
-fi
+# copy back non-work, root files
+for f in "Procfile" "system.properties"; do
+  if [ -f $CACHE_DIR/tmp_work/$f ]; then
+    mv $CACHE_DIR/tmp_work/$f .
+  fi
+done
 
 echo -n "-----> Downloading Factor... "
 curl --silent --fail http://rbrainard-public.s3.amazonaws.com/heroku-buildpack-factor/factor.tgz | tar xz
@@ -27,11 +29,14 @@ mv $CACHE_DIR/tmp_work work
 echo "done"
 
 echo -n "-----> Preparing Furnace imaging... "
-./factor << EOF
-USE: furnace
-"tmp.image" save-image
-USE: system
+if [ -f system.properties ]; then
+  USING_KEY="factor.image.using="
+  USING=$(cat system.properties | grep -m 1 $USING_KEY | sed s/$USING_KEY//)
+  ./factor << EOF
+USING: system $USING ;
+save
 0 exit
 EOF
-mv tmp.image factor.image
+fi
+
 echo "done"
