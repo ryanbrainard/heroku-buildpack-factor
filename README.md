@@ -75,7 +75,7 @@ _To get started, first follow the [Heroku Quickstart](https://devcenter.heroku.c
          3 files changed, 25 insertions(+)
          create mode 100644 Procfile
          create mode 100644 system.properties
-         create mode 100644 webapp/hello/hello.factor
+         create mode 100644 webapps/hello/hello.factor
    
 7. Push to Heroku. The first push will take longer because the image is being prepared, but subsequent pushes should be faster.
 
