@@ -24,8 +24,8 @@ curl --silent --fail http://rbrainard-public.s3.amazonaws.com/heroku-buildpack-f
 echo "done"
 
 echo -n "-----> Preparing image... "
-if [ ! $(diff system.properties $CACHE_DIR/system.properties) ]; then
-  echo -n "from cache..."
+if [ ! $(diff system.properties $CACHE_DIR/system.properties &> /dev/null) ]; then
+  echo -n "from cache..."d
   cp $CACHE_DIR/factor.image .
 elif [ -f system.properties ]; then
   USING_KEY="factor.image.using="
