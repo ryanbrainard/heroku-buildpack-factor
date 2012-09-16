@@ -25,7 +25,7 @@ echo "done"
 
 echo -n "-----> Preparing image... "
 if [ ! $(diff system.properties $CACHE_DIR/system.properties &> /dev/null) ]; then
-  echo -n "from cache..."d
+  echo -n "from cache..."
   cp $CACHE_DIR/factor.image .
 elif [ -f system.properties ]; then
   USING_KEY="factor.image.using="
