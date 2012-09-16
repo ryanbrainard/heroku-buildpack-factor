@@ -25,8 +25,8 @@ echo "done"
 
 echo -n "-----> Preparing image... "
 if [ -f system.properties ] && \
-   [ -f $CACHE_DIR/system.properties ] && \ 
-   [ -f $CACHE_DIR/factor.image ] && \ 
+   [ -f $CACHE_DIR/system.properties ] && \
+   [ -f $CACHE_DIR/factor.image ] && \
    [ ! $(diff system.properties $CACHE_DIR/system.properties &> /dev/null) ]; then
   echo -n "from cache..."
   cp $CACHE_DIR/factor.image .
