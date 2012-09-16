@@ -23,20 +23,28 @@ echo -n "-----> Downloading Factor... "
 curl --silent --fail http://rbrainard-public.s3.amazonaws.com/heroku-buildpack-factor/factor.tgz | tar xz
 echo "done"
 
-echo -n "-----> Copying app into work dir... "
-rm -rf work
-mv $CACHE_DIR/tmp_work work
-echo "done"
-
-echo -n "-----> Preparing Furnace imaging... "
-if [ -f system.properties ]; then
+echo -n "-----> Preparing image... "
+if [ ! $(diff system.properties $CACHE_DIR/system.properties) ]; then
+  echo -n "from cache..."
+  cp $CACHE_DIR/factor.image .
+else [ -f system.properties ]; then
   USING_KEY="factor.image.using="
   USING=$(cat system.properties | grep -m 1 $USING_KEY | sed s/$USING_KEY//)
-  ./factor << EOF
+  if [ -n $USING ]; then
+     echo -n "using $USING..."
+     ./factor << EOF
 USING: system $USING ;
 save
 0 exit
 EOF
+    cp factor.image      $CACHE_DIR
+    cp system.properties $CACHE_DIR
+  fi
 fi
-
 echo "done"
+
+echo -n "-----> Preparing work dir... "
+rm -rf work
+mv $CACHE_DIR/tmp_work work
+echo "done"
+
