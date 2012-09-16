@@ -28,13 +28,11 @@ if [ -f system.properties ] && \
    [ -f $CACHE_DIR/system.properties ] && \
    [ -f $CACHE_DIR/factor.image ] && \
    [ ! $(diff system.properties $CACHE_DIR/system.properties &> /dev/null) ]; then
-  echo -n "from cache..."
   cp $CACHE_DIR/factor.image .
 elif [ -f system.properties ]; then
   USING_KEY="factor.image.using="
   USING=$(cat system.properties | grep -m 1 $USING_KEY | sed s/$USING_KEY//)
   if [ -n $USING ]; then
-     echo -n "USING $USING..."
      ./factor << EOF
 USING: system $USING ;
 save
